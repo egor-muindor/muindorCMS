@@ -8,6 +8,6 @@ export default {
     imagesList: [],
 
     nav: [
-        { path: '/', title: 'Home', auth: 'both' },
-    ],
+        { path: '/', title: 'Home', auth: 'both', icon: 'home' }
+    ]
 };

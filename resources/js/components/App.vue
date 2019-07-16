@@ -1,7 +1,8 @@
 <template>
     <v-app>
-        <v-toolbar
+        <v-app-bar
             dark
+            app
             color="primary"
         >
             <v-toolbar-title>Muindor CMS</v-toolbar-title>
@@ -9,21 +10,23 @@
             <v-btn
                 v-for="item in nav"
                 :key="item.path"
-                flat
                 :to="item.path"
             >
+                <v-icon v-if="item.icon">
+                    {{ item.icon }}
+                </v-icon>
                 {{ item.title }}
             </v-btn>
             <v-spacer />
             <v-btn
-                flat
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://github.com/egor-muindor/"
             >
+                <v-icon>{{ icons.mdiGithubBox }}</v-icon>
                 Github
             </v-btn>
-        </v-toolbar>
+        </v-app-bar>
         <v-content>
             <v-container>
                 <router-view />
@@ -34,6 +37,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { mdiGithubBox } from '@mdi/js';
 
 export default {
     computed: {
@@ -41,6 +45,9 @@ export default {
     },
     data () {
         return {
+            icons: {
+                mdiGithubBox: mdiGithubBox
+            },
             active: null
         };
     },

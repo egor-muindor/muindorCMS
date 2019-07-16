@@ -1,18 +1,13 @@
-import 'vuetify/dist/vuetify.min.css'; // styles for vuetify
 import VueRouter from 'vue-router';
-import Vuetify from 'vuetify';
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
 window.VueRouter = VueRouter;
-Vue.use(Vuetify);
-window.Vuetify = Vuetify;
 
-import Vuex from "vuex";
+import Vuex from 'vuex';
 import state from './store/state';
 import mutations from './store/mutations';
 import actions from './store/actions';
-
 
 const store = new Vuex.Store({
     state,
