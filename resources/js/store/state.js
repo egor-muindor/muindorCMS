@@ -1,6 +1,6 @@
 export default {
     app: {
-        title: 'Muindor CMS',
+        title: 'Egor Muindor Fadeev',
         GDPR: null
     },
 
@@ -13,7 +13,8 @@ export default {
     imagesList: [],
 
     nav: [
-        { path: '/', title: 'Home', auth: 'both', icon: 'home' },
-        { path: '/qwe', title: 'Qqwe', auth: 'both', icon: 'accessible_forward' }
+        { path: '/', title: 'Главная', auth: 'both', icon: 'home' },
+        // { path: '/page2', title: 'Example', auth: 'both', icon: 'accessible_forward' },
+        // { path: '/qweqwe', title: 'Not found page', auth: 'both', icon: 'accessible_forward' }
     ]
 };

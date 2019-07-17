@@ -6,6 +6,7 @@
     >
         <v-card>
             <v-card-title class="headline">
+                <v-icon color="error">warning</v-icon>
                 Внимание
             </v-card-title>
             <v-card-text>
@@ -25,6 +26,7 @@
                     text
                     @click="disagree = true"
                 >
+                    <v-icon>cancel</v-icon>
                     Отклонить
                 </v-btn>
                 <v-btn
@@ -33,6 +35,7 @@
                     text
                     @click="onDisagree"
                 >
+                    <v-icon>exit_to_app</v-icon>
                     Покинуть сайт
                 </v-btn>
                 <v-btn
@@ -40,6 +43,7 @@
                     text
                     @click="onAgree"
                 >
+                    <v-icon>check</v-icon>
                     Принять
                 </v-btn>
             </v-card-actions>
@@ -57,7 +61,7 @@ export default {
         };
     },
     mounted () {
-        this.dialog = !(this.$cookie.get('GDPR') === 'true');
+        this.dialog = !this.$store.state.app.GDPR;
     },
     methods: {
         onDisagree: function () {
