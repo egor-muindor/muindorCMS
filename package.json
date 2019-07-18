@@ -23,7 +23,8 @@
         "sass-loader": "^7.1.0",
         "vue": "^2.5.17",
         "vue-cookie": "^1.1.4",
-        "vue-template-compiler": "^2.6.10"
+        "vue-template-compiler": "^2.6.10",
+        "vuelidate": "^0.7.4"
     },
     "dependencies": {
         "vue-router": "^3.0.7",

@@ -1,7 +1,6 @@
 <template>
     <div>
         <section
-            id="welcome"
             class="hide-overflow"
         >
             <v-layout>

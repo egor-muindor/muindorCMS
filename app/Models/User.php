@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'admin'
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     /**
@@ -36,4 +36,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     *
+     */
+    public function isAdmin() {
+        return $this->admin;
+    }
+
+    public function info() {
+        return [
+            'name' => $this->name,
+            'email' => $this->email,
+            'api_token' => $this->api_token,
+            'admin' => $this->admin
+        ];
+    }
 }
