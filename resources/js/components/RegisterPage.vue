@@ -15,25 +15,25 @@
                                     </v-card-title>
                                     <v-card-text>
                                         <v-text-field
-                                            v-model="name"
+                                            v-model="form.name"
                                             :error-messages="nameErrors"
                                             label="Name"
                                             required
                                             :disabled="loading"
-                                            @input="$v.name.$touch()"
-                                            @blur="$v.name.$touch()"
+                                            @input="$v.form.name.$touch()"
+                                            @blur="$v.form.name.$touch()"
                                         />
                                         <v-text-field
-                                            v-model="email"
+                                            v-model="form.email"
                                             :error-messages="emailErrors"
                                             label="E-mail"
                                             required
                                             :disabled="loading"
-                                            @input="$v.email.$touch()"
-                                            @blur="$v.email.$touch()"
+                                            @input="$v.form.email.$touch()"
+                                            @blur="$v.form.email.$touch()"
                                         />
                                         <v-text-field
-                                            v-model="password"
+                                            v-model="form.password"
                                             :append-icon="showPass ? 'visibility' : 'visibility_off'"
                                             :type="showPass ? 'text' : 'password'"
                                             label="Password"
@@ -41,11 +41,11 @@
                                             :error-messages="passwordErrors"
                                             :disabled="loading"
                                             @click:append="showPass = !showPass"
-                                            @input="$v.password.$touch()"
-                                            @blur="$v.password.$touch()"
+                                            @input="$v.form.password.$touch()"
+                                            @blur="$v.form.password.$touch()"
                                         />
                                         <v-text-field
-                                            v-model="password_confirm"
+                                            v-model="form.password_confirmation"
                                             :append-icon="showPass ? 'visibility' : 'visibility_off'"
                                             :type="showPass ? 'text' : 'password'"
                                             label="Password confirmation"
@@ -53,8 +53,8 @@
                                             :error-messages="passwordConfirmErrors"
                                             :disabled="loading"
                                             @click:append="showPass = !showPass"
-                                            @input="$v.password_confirm.$touch()"
-                                            @blur="$v.password_confirm.$touch()"
+                                            @input="$v.form.password_confirmation.$touch()"
+                                            @blur="$v.form.password_confirmation.$touch()"
                                         />
                                     </v-card-text>
                                     <v-card-actions class="justify-center">
@@ -85,6 +85,7 @@
 import { validationMixin } from 'vuelidate';
 import { required, maxLength, email, minLength, helpers } from 'vuelidate/lib/validators';
 import PrivacyPolicyModalComponent from './PrivacyPolicyModalComponent';
+import axios from 'axios';
 
 const nameRule = helpers.regex('nameRule', /^[a-zA-Z0-9\-_#]*$/);
 const passwordConfirmRule = (password) => (v) => {
@@ -97,47 +98,60 @@ export default {
     mixins: [validationMixin],
     data () {
         return {
+            form: {
+                name: null,
+                email: null,
+                password: null,
+                password_confirmation: null
+            },
             loading: false,
-            name: null,
-            email: null,
-            password: null,
-            password_confirm: null,
             showPass: false,
-            showPrivacyPolicy: false
+            showPrivacyPolicy: false,
+
+            errors: {}
         };
     },
     computed: {
         nameErrors () {
+            let field = 'name';
             const errors = [];
-            if (!this.$v.name.$dirty) return errors;
-            !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long');
-            !this.$v.name.minLength && errors.push('Name must be at least 3 characters long');
-            !this.$v.name.required && errors.push('Name is required');
-            !this.$v.name.nameRule && errors.push('Name can only consist of a-z A-Z 0-9 -_#');
+            if (this.errors.hasOwnProperty(field)) return this.errors[field];
+            if (!this.$v.form.name.$dirty) return errors;
+            !this.$v.form[field].maxLength && errors.push('Name must be at most 10 characters long');
+            !this.$v.form[field].minLength && errors.push('Name must be at least 3 characters long');
+            !this.$v.form[field].required && errors.push('Name is required');
+            !this.$v.form[field].nameRule && errors.push('Name can only consist of a-z A-Z 0-9 -_#');
             return errors;
         },
         emailErrors () {
+            let field = 'email';
             const errors = [];
-            if (!this.$v.email.$dirty) return errors;
-            !this.$v.email.email && errors.push('Must be valid e-mail');
-            !this.$v.email.required && errors.push('E-mail is required');
+            if (this.errors.hasOwnProperty(field)) return this.errors[field];
+            if (!this.$v.form[field].$dirty) return errors;
+            !this.$v.form[field].email && errors.push('Must be valid e-mail');
+            !this.$v.form[field].required && errors.push('E-mail is required');
             return errors;
         },
         passwordErrors () {
+            let field = 'password';
             const errors = [];
-            if (!this.$v.password.$dirty) return errors;
-            !this.$v.password.required && errors.push('Password is required');
-            !this.$v.password.minLength && errors.push('Password must be at least 8 characters long');
-            !this.$v.password.maxLength && errors.push('Password must be at most 48 characters long');
+            if (this.errors.hasOwnProperty(field)) return this.errors[field];
+            if (!this.$v.form[field].$dirty) return errors;
+            !this.$v.form[field].required && errors.push('Password is required');
+            !this.$v.form[field].minLength && errors.push('Password must be at least 8 characters long');
+            !this.$v.form[field].maxLength && errors.push('Password must be at most 48 characters long');
+            !this.$v.form.password_confirmation.passwordConfirmRule && this.$v.form.password_confirmation.$touch();
             return errors;
         },
         passwordConfirmErrors () {
+            let field = 'password_confirmation';
             const errors = [];
-            if (!this.$v.password_confirm.$dirty) return errors;
-            !this.$v.password_confirm.required && errors.push('Password confirmation is required');
-            !this.$v.password_confirm.minLength && errors.push('Password confirmation must be at least 8 characters long');
-            !this.$v.password_confirm.maxLength && errors.push('Password confirmation must be at most 48 characters long');
-            !this.$v.password_confirm.passwordConfirmRule && errors.push('Passwords must be equal');
+            if (this.errors.hasOwnProperty(field)) return this.errors[field];
+            if (!this.$v.form[field].$dirty) return errors;
+            !this.$v.form[field].required && errors.push('Password confirmation is required');
+            !this.$v.form[field].minLength && errors.push('Password confirmation must be at least 8 characters long');
+            !this.$v.form[field].maxLength && errors.push('Password confirmation must be at most 48 characters long');
+            !this.$v.form[field].passwordConfirmRule && errors.push('Passwords must be equal');
             return errors;
         }
     },
@@ -152,20 +166,27 @@ export default {
         accepted: function () {
             this.showPrivacyPolicy = false;
             this.loading = true;
-            // TODO: ДОБАВИТЬ ЗАПРОС НА РЕГИСТРАЦИЮ
+            axios.post('/api/register', this.form).then(response => {
+                this.$router.push({ name: 'LoginPage' });
+            }).catch(error => {
+                this.loading = false;
+                this.errors = error.response.data.errors;
+            });
         }
     },
     validations () {
-        let pass = this.password;
+        let pass = this.form.password;
         return {
-            name: { required, maxLength: maxLength(255), minLength: minLength(3), nameRule },
-            email: { required, email },
-            password: { required, minLength: minLength(8), maxLength: maxLength(48) },
-            password_confirm: {
-                required,
-                minLength: minLength(8),
-                maxLength: maxLength(48),
-                passwordConfirmRule: passwordConfirmRule(pass)
+            form: {
+                name: { required, maxLength: maxLength(255), minLength: minLength(3), nameRule },
+                email: { required, email },
+                password: { required, minLength: minLength(8), maxLength: maxLength(48) },
+                password_confirmation: {
+                    required,
+                    minLength: minLength(8),
+                    maxLength: maxLength(48),
+                    passwordConfirmRule: passwordConfirmRule(pass)
+                }
             }
         };
     }
