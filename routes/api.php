@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/admin/settings', 'Admin\\AppSettingsController@setSetting');
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
+Route::post('/logout', 'AuthController@logout');
 

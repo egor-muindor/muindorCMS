@@ -61,7 +61,9 @@ export default {
         };
     },
     mounted () {
-        this.dialog = !this.$store.state.app.GDPR;
+        if (this.$store.state.app.GDPR_enable) {
+            this.dialog = !this.$store.state.app.GDPR;
+        }
     },
     methods: {
         onDisagree: function () {

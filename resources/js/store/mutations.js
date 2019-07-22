@@ -1,5 +1,14 @@
 export default {
     updateGDPR (state, payload) {
         state.app.GDPR = payload;
+    },
+    Login (state) {
+        state.Auth.name = localStorage.getItem('name');
+        state.Auth.admin = localStorage.getItem('admin') === '1';
+        state.Auth.api_token = localStorage.getItem('api_token');
+        state.Auth.status =
+            (state.Auth.user_id !== null &&
+            state.Auth.api_token !== null &&
+            state.Auth.name !== null) ? 'auth' : 'guest';
     }
 };

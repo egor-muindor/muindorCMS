@@ -22,7 +22,6 @@
                     layout
                     :pa-5="$vuetify.breakpoint.smAndDown"
                     wrap
-
                 >
                     <v-layout
                         align-center
@@ -36,8 +35,10 @@
                             <v-avatar size="108" class="my-5">
                                 <v-img :src="avatar"></v-img>
                             </v-avatar>
-                            <h1 class="display-2 v-heading mb-3 font-weight-light">Привет, <br>меня зовут Егор и я
-                                разработчик, человек, нёрд.</h1>
+                            <h1 class="display-2 v-heading mb-3 font-weight-light">
+                                Привет, <br>меня зовут Егор.<br>
+                                Я разработчик.
+                            </h1>
                             <p
                                 class="title font-weight-light"
                                 style="line-height: 1.7 !important;"

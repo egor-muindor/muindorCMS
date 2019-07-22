@@ -86,6 +86,7 @@ import { validationMixin } from 'vuelidate';
 import { required, maxLength, email, minLength, helpers } from 'vuelidate/lib/validators';
 import PrivacyPolicyModalComponent from './PrivacyPolicyModalComponent';
 import axios from 'axios';
+import Auth from '../helpers/Auth';
 
 const nameRule = helpers.regex('nameRule', /^[a-zA-Z0-9\-_#]*$/);
 const passwordConfirmRule = (password) => (v) => {
@@ -96,6 +97,9 @@ export default {
     name: 'RegisterPage',
     components: { 'privacy-policy': PrivacyPolicyModalComponent },
     mixins: [validationMixin],
+    created () {
+        Auth.checkAlready();
+    },
     data () {
         return {
             form: {

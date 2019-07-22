@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Auth;
 use Hash;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('register', 'login');
+    }
+
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -26,19 +32,14 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required_without:email|max:255',
-            'email' => 'required_without:name|max:255',
+            'login' => 'required|max:255',
             'password' => 'required|between:8,48'
         ]);
 
-        if ($request->input('name')) {
-            $user = User::whereName($request->name)->first();
-        } else {
-            $user = User::whereEmail($request->email)->first();
-        }
+        $user = User::where('name', '=', $request->login)->orWhere('email', '=', $request->login)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            $user->update(['api_token' => \Str::random(100)]);
+            $user->update(['api_token' => \Str::random(60)]);
 
             return [
                 'success' => true,
@@ -48,11 +49,19 @@ class AuthController extends Controller
 
         return [
             'errors' => [
-                'login' => 'Login failed'
+                'login' => ['Login or password is wrong!']
             ],
             'status' => 422
         ];
+    }
 
+    public function logout(){
+        $user = Auth::user();
 
+        $user->update(['api_token' => null]);
+
+        return [
+            'success' => true,
+        ];
     }
 }
