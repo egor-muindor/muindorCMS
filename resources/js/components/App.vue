@@ -120,7 +120,11 @@
 
         <v-content>
             <v-container fluid>
-                <router-view />
+                <keep-alive>
+                    <component v-bind:is="transitionName" mode="out-in">
+                        <router-view keep-alive />
+                    </component>
+                </keep-alive>
             </v-container>
         </v-content>
 
@@ -139,12 +143,23 @@
 </template>
 
 <script>
+import { VSlideXTransition, VSlideXReverseTransition } from 'vuetify/lib';
 import { mapState } from 'vuex';
 import { mdiGithubBox } from '@mdi/js';
 import Auth from '../helpers/Auth';
 import axios from 'axios';
 
 export default {
+    data () {
+        return {
+            transitionName: VSlideXTransition,
+            icons: {
+                mdiGithubBox: mdiGithubBox
+            },
+            active: null,
+            show: false
+        };
+    },
     computed: {
         ...mapState(['nav', 'authRoutes', 'profileNav']),
         auth () {
@@ -154,19 +169,18 @@ export default {
             return this.$store.state.app.title;
         }
     },
-    data () {
-        return {
-            icons: {
-                mdiGithubBox: mdiGithubBox
-            },
-            active: null,
-            show: false
-        };
+    watch: {
+        '$route' (to, from) {
+            const toDepth = to.path.split('/').length
+            const fromDepth = from.path.split('/').length
+            this.transitionName = toDepth < fromDepth ? VSlideXReverseTransition : VSlideXTransition;
+        }
     },
     created () {
-        Auth.init();
+        Auth.verify();
     },
     beforeCreate () {
+        Auth.init();
         if (this.$store.state.app.GDPR_enable) {
             let gdpr = this.$cookie.get('GDPR');
             if (gdpr === 'true') {

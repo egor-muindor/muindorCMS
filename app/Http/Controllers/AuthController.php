@@ -55,6 +55,15 @@ class AuthController extends Controller
         ];
     }
 
+    public function verify(){
+        $user = Auth::user();
+
+        return [
+            'success' => true,
+            'user' => $user->info()
+        ];
+    }
+
     public function logout(){
         $user = Auth::user();
 

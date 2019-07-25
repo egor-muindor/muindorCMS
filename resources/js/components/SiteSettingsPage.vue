@@ -32,7 +32,7 @@
                                         ></v-text-field>
                                     </v-flex>
                                 </v-layout>
-                                <v-divider/>
+                                <v-divider />
                             </div>
                         </v-card-text>
                         <v-card-actions class="justify-center">
@@ -77,9 +77,14 @@ export default {
     },
     methods: {
         sendData: function () {
-            axios.post('/api/admin/settings', this.form).then(
-                response => {
-                    console.log(response);
+            axios.post('/api/admin/settings', this.form).then(response => {
+                console.log(response);
+            }).catch(error => {
+                if (error.response.status === 401) {
+                    Auth.logout();
+                    this.$router.push({ name: 'LoginPage' });
+                }
+                this.$router.push({ name: 'HomePage' });
             });
         }
     },

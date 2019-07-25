@@ -9,6 +9,20 @@ export default {
         }
     },
 
+    verify () {
+        if (store.state.Auth.status === 'auth') {
+            axios.post('/api/user/verify').then(response => {
+                this.login(response.data.user);
+            }).catch(error => {
+                if (error.response.status === 401) {
+                    this.logout();
+                    router.push('/login');
+                }
+                console.error(error.response);
+            });
+        }
+    },
+
     login (data) {
         localStorage.setItem('api_token', data.api_token);
         localStorage.setItem('name', data.name);

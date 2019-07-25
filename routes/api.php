@@ -22,4 +22,5 @@ Route::post('/admin/settings', 'Admin\\AppSettingsController@setSetting');
 Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
+Route::post('/user/verify', 'AuthController@verify');
 
