@@ -6,7 +6,9 @@
     >
         <v-card>
             <v-card-title class="headline">
-                <v-icon color="error">warning</v-icon>
+                <v-icon color="error">
+                    warning
+                </v-icon>
                 Внимание
             </v-card-title>
             <v-card-text>

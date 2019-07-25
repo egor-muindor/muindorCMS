@@ -18,18 +18,18 @@ export default {
     },
 
     nav: [
-        { path: '/', title: 'Главная', auth: 'both', icon: 'home' },
-        // { path: '/page2', title: 'Example', auth: 'both', icon: 'accessible_forward' },
-        // { path: '/qweqwe', title: 'Not found page', auth: 'both', icon: 'accessible_forward' }
+        { path: '/', title: 'Главная', icon: 'home', auth: 'both', admin: false },
+        { name: 'AboutPage', title: 'Обо мне', icon: 'accessible_forward', auth: 'both', admin: false },
+        { name: 'Blog.MainPage', title: 'Блог', icon: 'book', auth: 'both', admin: false },
+        { name: 'AdminSiteSettingsPage', title: 'Настройки сайта', icon: 'dashboard', auth: 'auth', admin: true },
     ],
 
     authRoutes: [
-        { name: 'LoginPage', title: 'Авторизация', auth: 'guest', icon: '' },
-        { name: 'RegisterPage', title: 'Регистрация', auth: 'guest', icon: '' },
-        // { path: '/qweqwe', title: 'Not found page', auth: 'both', icon: 'accessible_forward' }
+        { name: 'LoginPage', title: 'Авторизация', icon: '', auth: 'guest', admin: false },
+        { name: 'RegisterPage', title: 'Регистрация', icon: '', auth: 'guest', admin: false },
     ],
 
     profileNav: [
-        // { name: 'LoginPage', title: 'Авторизация', auth: 'guest', icon: '' },
+
     ]
 };

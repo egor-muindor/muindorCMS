@@ -21,10 +21,10 @@
                     culpa qui officia deserunt mollit anim id est laborum.
                 </v-card-text>
 
-                <v-divider></v-divider>
+                <v-divider />
 
                 <v-card-actions>
-                    <v-spacer></v-spacer>
+                    <v-spacer />
                     <v-btn
                         color="primary"
                         text

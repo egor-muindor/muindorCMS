@@ -20,6 +20,7 @@ export default {
     logout () {
         localStorage.removeItem('api_token');
         localStorage.removeItem('name');
+        localStorage.removeItem('admin');
 
         this.init();
     },
@@ -27,6 +28,13 @@ export default {
     check () {
         if (store.state.Auth.status === 'guest') {
             router.push('/login');
+        }
+    },
+
+    checkAdmin () {
+        this.check();
+        if (!store.state.Auth.admin) {
+            router.push('/');
         }
     },
 

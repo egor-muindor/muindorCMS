@@ -9,15 +9,35 @@ use Illuminate\Http\Request;
 
 class AppSettingsController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth:api')
             ->only('setSetting');
         $this->middleware(AdminCheck::class)
             ->only('setSetting');
     }
 
-    public function setSetting(Request $request){
-        $setting = ApplicationSettings::updateOrCreate(['name' => $request->input('name')], $request->all(['value', 'comment']));
+    public function setSetting(Request $request)
+    {
+        $data = $request->all();
+        foreach ($data as $item) {
+            $setting = ApplicationSettings::updateOrCreate(
+                [
+                    'name' => $item['name']
+                ],
+                [
+                    'value' => $item['value'],
+                    'comment' => $item['comment']
+                ]);
+        }
+
+        return ['success' => true];
+    }
+
+    public function getSetting()
+    {
+        $setting = ApplicationSettings::all(['name', 'value', 'comment']);
+
         return $setting;
     }
 }

@@ -12,7 +12,7 @@
                         :src="background"
                         lazy-src
                         height="100vh"
-                    />
+                    ></v-img>
                 </v-flex>
 
                 <v-flex
@@ -33,7 +33,7 @@
                             md10
                         >
                             <v-avatar size="108" class="my-5">
-                                <v-img :src="avatar"></v-img>
+                                <v-img :src="avatar" />
                             </v-avatar>
                             <h1 class="display-2 v-heading mb-3 font-weight-light">
                                 Привет, <br>меня зовут Егор.<br>
@@ -67,7 +67,7 @@ export default {
     data () {
         return {
             avatar: 'https://pp.userapi.com/c848732/v848732981/16e723/rAK_EcHz4Rw.jpg',
-            background: 'https://muindor.com/imgs/bg_min.png'
+            background: '/imgs/bg_min.png'
         };
     }
 };

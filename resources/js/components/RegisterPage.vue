@@ -97,9 +97,6 @@ export default {
     name: 'RegisterPage',
     components: { 'privacy-policy': PrivacyPolicyModalComponent },
     mixins: [validationMixin],
-    created () {
-        Auth.checkAlready();
-    },
     data () {
         return {
             form: {
@@ -158,6 +155,9 @@ export default {
             !this.$v.form[field].passwordConfirmRule && errors.push('Passwords must be equal');
             return errors;
         }
+    },
+    created () {
+        Auth.checkAlready();
     },
     methods: {
         register: function () {

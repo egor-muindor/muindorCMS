@@ -68,9 +68,6 @@ import Auth from '../helpers/Auth';
 
 export default {
     name: 'LoginPage',
-    created () {
-        Auth.checkAlready();
-    },
     data () {
         return {
             form: {
@@ -82,6 +79,9 @@ export default {
 
             errors: {}
         };
+    },
+    created () {
+        Auth.checkAlready();
     },
     methods: {
         login: function () {

@@ -1,92 +1,134 @@
 <template>
     <v-app>
-        <v-content>
-            <v-toolbar
-                color="primary"
-                dark
-            >
-                <v-toolbar-title class="pr-2">
-                    <v-btn
-                        text
-                        tile
-                        @click="onHome"
-                    >
-                        {{ title }}
-                    </v-btn>
-                </v-toolbar-title>
-                <v-divider vertical />
-                <v-spacer />
-                <v-toolbar-items class="hidden-sm-and-down">
-                    <v-btn
-                        v-for="item in nav"
-                        v-if="item.auth === auth.status || item.auth === 'both'"
-                        :key="item.path"
-                        text
-                        :to="item.path"
-                    >
-                        <v-icon v-if="item.icon">
-                            {{ item.icon }}
-                        </v-icon>
-                        {{ item.title }}
-                    </v-btn>
-                </v-toolbar-items>
-                <v-spacer />
-                <v-divider vertical />
-                <v-toolbar-items>
-                    <v-btn
+        <v-navigation-drawer v-model="show" app>
+            <v-list>
+
+                <v-list-group v-if="auth.status === 'guest'" no-action class="hidden-md-and-up">
+                    <template v-slot:activator>
+                        <v-list-item-content>
+                            <v-list-item-title>Авторизация</v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+                    <v-list-item
                         v-for="item in authRoutes"
-                        v-if="item.auth === auth.status || item.auth === 'both'"
+                        v-if="item.auth === auth.status || item.auth === 'both' && (!(auth.admin ^ item.admin) ||
+                            auth.admin)"
                         :key="item.name"
-                        text
                         :to="{ name: item.name }"
                     >
+                        <v-list-item-icon v-if="item.icon">
+                            <v-icon>
+                                {{ item.icon }}
+                            </v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>
+                            {{ item.title }}
+                        </v-list-item-title>
+                    </v-list-item>
+                </v-list-group>
+
+                <v-list-group v-if="auth.status === 'auth'" no-action>
+                    <template v-slot:activator>
+                        <v-list-item>
+                            <v-list-item-avatar>
+                                <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+                            </v-list-item-avatar>
+                            <v-list-item-title>
+                                <v-list-item-title>{{ auth.name }}</v-list-item-title>
+                            </v-list-item-title>
+                        </v-list-item>
+                    </template>
+                    <v-list-item
+                        v-for="item in profileNav"
+                        v-if="!(auth.admin ^ item.admin) || auth.admin"
+                        :key="item.name"
+                        :to="{ name: item.name }"
+                    >
+                        <v-list-item-title>
+                            {{ item.title }}
+                        </v-list-item-title>
+                    </v-list-item>
+                    <v-list-item
+                        color="red"
+                        @click="logout()"
+                    >
+                        <v-list-item-title>
+                            Выйти
+                        </v-list-item-title>
+                    </v-list-item>
+                </v-list-group>
+
+                <v-divider v-if="auth.status === 'guest'" class="hidden-md-and-up" />
+                <v-divider v-else />
+
+                <v-list-item
+                    v-for="item in nav"
+                    v-if="(item.auth === auth.status || item.auth === 'both') &&
+                        (!(auth.admin ^ item.admin) || auth.admin)"
+                    :key="item.name"
+                    :to="(item.name !== undefined) ? { name: item.name } : item.path"
+                    link
+                >
+                    <v-list-item-icon>
                         <v-icon v-if="item.icon">
                             {{ item.icon }}
                         </v-icon>
-                        {{ item.title }}
-                    </v-btn>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            {{ item.title }}
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+            </v-list>
+        </v-navigation-drawer>
 
+        <v-app-bar
+            app dark short
+            flat color="primary"
+        >
+            <v-app-bar-nav-icon @click="show = !show" />
+            <v-toolbar-title class="pr-2">
+                <v-btn
+                    text
+                    tile
+                    @click="onHome"
+                >
+                    {{ title }}
+                </v-btn>
+            </v-toolbar-title>
+            <v-divider vertical />
+            <v-spacer />
+            <v-toolbar-items class="hidden-sm-and-down">
+                <v-btn
+                    v-for="item in authRoutes"
+                    v-if="item.auth === auth.status || item.auth === 'both' && (!(auth.admin ^ item.admin) ||
+                        auth.admin)"
+                    :key="item.name"
+                    text
+                    :to="{ name: item.name }"
+                >
+                    <v-icon v-if="item.icon">
+                        {{ item.icon }}
+                    </v-icon>
+                    {{ item.title }}
+                </v-btn>
+            </v-toolbar-items>
+        </v-app-bar>
 
-                    <v-menu
-                        v-if="auth.status === 'auth' || auth.status === 'admin'"
-                        offset-y
-                        open-on-hover
-                    >
-                        <template v-slot:activator="{on}">
-                            <v-btn
-                                text
-                                dark
-                                v-on="on"
-                            >
-                                {{ auth.name }}
-                            </v-btn>
-                        </template>
+        <gdpr-banner />
 
-                        <v-list>
-                            <v-list-item
-                                v-for="item in profileNav"
-                                :key="item.name"
-                                @click="onClick(item)"
-                            >
-                                {{ item.title }}
-                            </v-list-item>
-                            <v-list-item
-                                @click="logout()"
-                            >
-                                Выйти
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-                </v-toolbar-items>
-            </v-toolbar>
-            <gdpr-banner />
-            <router-view />
+        <v-content>
+            <v-container fluid>
+                <router-view />
+            </v-container>
         </v-content>
-        <v-footer padless>
-            <v-flex
-                text-center
-                xs12
-            >
+
+        <v-footer
+            app inset padless
+            dark absolute
+        >
+            <v-flex text-center xs12>
                 {{ new Date().getFullYear() }} — <strong>Egor 'Muindor' Fadeev</strong>
                 <a href="https://github.com/egor-muindor">
                     <v-icon>{{ icons.mdiGithubBox }}</v-icon>
@@ -100,6 +142,7 @@
 import { mapState } from 'vuex';
 import { mdiGithubBox } from '@mdi/js';
 import Auth from '../helpers/Auth';
+import axios from 'axios';
 
 export default {
     computed: {
@@ -116,7 +159,8 @@ export default {
             icons: {
                 mdiGithubBox: mdiGithubBox
             },
-            active: null
+            active: null,
+            show: false
         };
     },
     created () {
@@ -136,10 +180,6 @@ export default {
         onHome: function () {
             this.$router.push('/');
         },
-        onClick: function (item) {
-            this.$router.push(item.path);
-            return true;
-        },
         logout: function () {
             axios.post('/api/logout').then(response => {
                 if (response.data.success) {
@@ -151,3 +191,7 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+
+</style>

@@ -26,6 +26,13 @@
             "error",
             4
         ],
+        "vue/max-attributes-per-line": ["error", {
+            "singleline": 3,
+            "multiline": {
+                "max": 4,
+                "allowFirstLine": false
+            }
+        }],
         "vue/html-indent": [
             "error",
             4
