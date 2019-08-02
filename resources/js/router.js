@@ -8,13 +8,15 @@ import SiteSettingsPage from './components/SiteSettingsPage';
 
 import BlogMainPage from './components/blog/MainPage';
 import BlogPostPage from './components/blog/PostPage';
+import ProfilePage from './components/ProfilePage';
 
 const customRoutes = [
     { path: '/', name: 'HomePage', component: HomePage, meta: { title: 'Главная' } },
     { path: '/register', name: 'RegisterPage', component: RegisterPage, meta: { title: 'Регистрация' } },
     { path: '/login', name: 'LoginPage', component: LoginPage, meta: { title: 'Авторизация' } },
     { path: '/about', name: 'AboutPage', component: AboutPage, meta: { title: 'Обо мне' } },
-    { path: '/admin/site-settings', name: 'AdminSiteSettingsPage', component: SiteSettingsPage, meta: { title: 'Редактирование настроек сайта' } }
+    { path: '/admin/site-settings', name: 'AdminSiteSettingsPage', component: SiteSettingsPage, meta: { title: 'Редактирование настроек сайта' } },
+    { path: '/profile', name: 'ProfilePage', component: ProfilePage, meta: { title: 'Профиль' } }
 ];
 
 const blogRoutes = [

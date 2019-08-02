@@ -36,15 +36,14 @@
                                 <v-img :src="avatar" />
                             </v-avatar>
                             <h1 class="display-2 v-heading mb-3 font-weight-light">
-                                Привет, <br>меня зовут Егор.<br>
+                                Привет, меня зовут Егор.<br>
                                 Я разработчик.
                             </h1>
                             <p
                                 class="title font-weight-light"
                                 style="line-height: 1.7 !important;"
                             >
-                                20-летний парень, увлеченный разработкой сайтов, компьютерами, аниме, космосом,
-                                антропологией многими другими науками о прошлом, настоящем и будущем.
+                                Мне 20 лет, я увлекаюсь разработкой сайтов, компьютерами, аниме.
                             </p>
                             <p
                                 class="title font-weight-light"

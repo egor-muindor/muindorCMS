@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'api_token', 'admin'
+        'name', 'email', 'password', 'api_token', 'admin', 'avatar'
     ];
 
     /**
@@ -49,7 +49,8 @@ class User extends Authenticatable
             'name' => $this->name,
             'email' => $this->email,
             'api_token' => $this->api_token,
-            'admin' => $this->admin
+            'admin' => $this->admin,
+            'avatar' => $this->avatar
         ];
     }
 }

@@ -30,8 +30,11 @@
                 <v-list-group v-if="auth.status === 'auth'" no-action>
                     <template v-slot:activator>
                         <v-list-item>
-                            <v-list-item-avatar>
-                                <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+                            <v-list-item-avatar color="teal">
+                                <v-img v-if="auth.avatar" :src="auth.avatar"></v-img>
+                                <span class="white--text headline" v-else>
+                                    {{ auth.name.slice(0,1) }}
+                                </span>
                             </v-list-item-avatar>
                             <v-list-item-title>
                                 <v-list-item-title>{{ auth.name }}</v-list-item-title>
@@ -53,7 +56,7 @@
                         @click="logout()"
                     >
                         <v-list-item-title>
-                            Выйти
+                            <span class="red--text">Выход</span>
                         </v-list-item-title>
                     </v-list-item>
                 </v-list-group>
@@ -62,7 +65,7 @@
                 <v-divider v-else />
 
                 <v-list-item
-                    v-for="item in nav"
+                    v-for="(item) in nav"
                     v-if="(item.auth === auth.status || item.auth === 'both') &&
                         (!(auth.admin ^ item.admin) || auth.admin)"
                     :key="item.name"
@@ -120,11 +123,7 @@
 
         <v-content>
             <v-container fluid>
-                <keep-alive>
-                    <component v-bind:is="transitionName" mode="out-in">
-                        <router-view keep-alive />
-                    </component>
-                </keep-alive>
+                <router-view keep-alive />
             </v-container>
         </v-content>
 
@@ -132,33 +131,73 @@
             app inset padless
             dark absolute
         >
-            <v-flex text-center xs12>
-                {{ new Date().getFullYear() }} — <strong>Egor 'Muindor' Fadeev</strong>
-                <a href="https://github.com/egor-muindor">
-                    <v-icon>{{ icons.mdiGithubBox }}</v-icon>
-                </a>
-            </v-flex>
+
+            <v-layout justify-space-between xs11>
+                <v-flex xs4 text-left>
+                    <span>
+                        Powered by
+                        <a href="https://laravel.com/">
+                            <v-icon>{{ icons.mdiLaravel }}</v-icon>
+                        </a>
+                        <a href="https://vuejs.org/">
+                            <v-icon>{{ icons.mdiVuejs }}</v-icon>
+                        </a>
+                        <a href="https://vuetifyjs.com/">
+                            <v-icon>{{ icons.mdiVuetify }}</v-icon>
+                        </a>
+
+                    </span>
+                </v-flex>
+                <v-flex xs4 text-center>
+                    <strong>Egor 'Muindor' Fadeev</strong>
+                    — {{ new Date().getFullYear() }}
+                </v-flex>
+                <v-flex xs4 text-right>
+                    My links —
+                    <a href="https://github.com/egor-muindor">
+                        <v-icon>{{ icons.mdiGithubBox }}</v-icon>
+                    </a>
+                    <a href="https://vk.com/muindor">
+                        <v-icon>{{ icons.mdiVkBox }}</v-icon>
+                    </a>
+                    <a href="https://t.me/Muindor">
+                        <v-icon>{{ icons.mdiTelegram }}</v-icon>
+                    </a>
+                    <a href="mailto:contact@muindor.com" aria-placeholder="contact@muindor.com">
+                        <v-icon>{{ icons.mdiEmail }}</v-icon>
+                    </a>
+                </v-flex>
+            </v-layout>
+
         </v-footer>
     </v-app>
 </template>
 
 <script>
-import { VSlideXTransition, VSlideXReverseTransition } from 'vuetify/lib';
+import { VListItemIcon } from 'vuetify/lib';
 import { mapState } from 'vuex';
-import { mdiGithubBox } from '@mdi/js';
+import { mdiGithubBox, mdiVkBox, mdiEmail, mdiLaravel, mdiVuejs, mdiVuetify, mdiTelegram } from '@mdi/js';
 import Auth from '../helpers/Auth';
 import axios from 'axios';
 
 export default {
     data () {
         return {
-            transitionName: VSlideXTransition,
             icons: {
-                mdiGithubBox: mdiGithubBox
+                mdiGithubBox: mdiGithubBox,
+                mdiEmail: mdiEmail,
+                mdiVkBox: mdiVkBox,
+                mdiLaravel: mdiLaravel,
+                mdiVuejs: mdiVuejs,
+                mdiVuetify: mdiVuetify,
+                mdiTelegram: mdiTelegram
             },
             active: null,
             show: false
         };
+    },
+    components: {
+        VListItemIcon
     },
     computed: {
         ...mapState(['nav', 'authRoutes', 'profileNav']),
@@ -167,13 +206,6 @@ export default {
         },
         title: function () {
             return this.$store.state.app.title;
-        }
-    },
-    watch: {
-        '$route' (to, from) {
-            const toDepth = to.path.split('/').length
-            const fromDepth = from.path.split('/').length
-            this.transitionName = toDepth < fromDepth ? VSlideXReverseTransition : VSlideXTransition;
         }
     },
     created () {

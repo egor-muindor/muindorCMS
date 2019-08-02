@@ -27,6 +27,7 @@ export default {
         localStorage.setItem('api_token', data.api_token);
         localStorage.setItem('name', data.name);
         localStorage.setItem('admin', data.admin);
+        localStorage.setItem('avatar', data.avatar);
 
         this.init();
     },
@@ -35,6 +36,7 @@ export default {
         localStorage.removeItem('api_token');
         localStorage.removeItem('name');
         localStorage.removeItem('admin');
+        localStorage.removeItem('avatar');
 
         this.init();
     },
