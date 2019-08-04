@@ -4,6 +4,7 @@ export default {
     },
     Login (state) {
         state.Auth.name = localStorage.getItem('name');
+        state.Auth.email = localStorage.getItem('email');
         state.Auth.admin = localStorage.getItem('admin') === '1';
         state.Auth.api_token = localStorage.getItem('api_token');
         state.Auth.avatar = localStorage.getItem('avatar') !== 'null' ? localStorage.getItem('avatar') : null;

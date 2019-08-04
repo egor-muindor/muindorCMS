@@ -7,6 +7,7 @@ export default {
 
     Auth: {
         name: null,
+        email: null,
         api_token: null,
         avatar: null,
         admin: null,
@@ -23,7 +24,7 @@ export default {
     nav: [
         { path: '/', title: 'Главная', icon: 'home', auth: 'both', admin: false },
         { name: 'AboutPage', title: 'Обо мне', icon: 'accessible_forward', auth: 'both', admin: false },
-        { name: 'Blog.MainPage', title: 'Блог', icon: 'book', auth: 'both', admin: true },
+        { name: 'Blog.MainPage', title: 'Блог', icon: 'book', auth: 'both', admin: false },
         { name: 'AdminSiteSettingsPage', title: 'Настройки сайта', icon: 'dashboard', auth: 'auth', admin: true }
     ],
 

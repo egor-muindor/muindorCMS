@@ -26,6 +26,7 @@ export default {
     login (data) {
         localStorage.setItem('api_token', data.api_token);
         localStorage.setItem('name', data.name);
+        localStorage.setItem('email', data.email);
         localStorage.setItem('admin', data.admin);
         localStorage.setItem('avatar', data.avatar);
 
@@ -35,6 +36,7 @@ export default {
     logout () {
         localStorage.removeItem('api_token');
         localStorage.removeItem('name');
+        localStorage.removeItem('email');
         localStorage.removeItem('admin');
         localStorage.removeItem('avatar');
 

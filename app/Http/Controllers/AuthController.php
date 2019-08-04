@@ -55,7 +55,42 @@ class AuthController extends Controller
         ];
     }
 
-    public function verify(){
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $this->validate($request, [
+            'name' => 'regex:/^[a-zA-Z0-9\-_#]*$/|max:255|nullable',
+            'email' => 'email|nullable',
+            'password' => 'between:6,48|nullable',
+            'old_password' => 'required|between:6,48'
+        ], [], [
+            'old_password' => 'текущий пароль'
+        ]);
+
+        if (!Hash::check($request->input('old_password'), $user->password)) {
+            return response([
+                'message' => 'Wrong password',
+                'errors' => ['old_password' => 'Неверный пароль']
+            ], 422);
+        }
+
+        $data = [
+            'name' => $request->input('name') ?: $user->name,
+            'email' => $request->input('email') ?: $user->email,
+            'password' => $request->input('password') === null ? $user->password : Hash::make($request->input('password')),
+        ];
+
+        $user->update($data);
+
+        return [
+            'success' => true,
+            'user' => $user->info()
+        ];
+    }
+
+    public function verify()
+    {
         $user = Auth::user();
 
         return [
@@ -64,7 +99,8 @@ class AuthController extends Controller
         ];
     }
 
-    public function logout(){
+    public function logout()
+    {
         $user = Auth::user();
 
         $user->update(['api_token' => null]);

@@ -23,4 +23,5 @@ Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 Route::post('/user/verify', 'AuthController@verify');
+Route::post('/user/profile', 'AuthController@updateProfile');
 
