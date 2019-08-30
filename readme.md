@@ -19,7 +19,10 @@
 
 ##### Laravel
 
-- [Laravel 5.8.28](https://laravel.com/)
+- [Laravel](https://laravel.com/)
+
+##### Laravel DevTools
+
 - [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
 - [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
 
@@ -30,6 +33,9 @@
 - [Vue router](https://router.vuejs.org/)
 - [Vuex](https://vuex.vuejs.org/)
 - [axios](https://github.com/axios/axios)
+
+##### Frontend DevTools
+
 - [ESlint](https://eslint.org/)
 - [Babel ESlint](https://github.com/babel/babel-eslint)
 - [ESlint Vue Plugin](https://eslint.vuejs.org/)
