@@ -24,8 +24,13 @@ export default {
     nav: [
         { path: '/', title: 'Главная', icon: 'home', auth: 'both', admin: false },
         { name: 'AboutPage', title: 'Обо мне', icon: 'accessible_forward', auth: 'both', admin: false },
-        { name: 'Blog.MainPage', title: 'Блог', icon: 'book', auth: 'both', admin: false },
-        { name: 'AdminSiteSettingsPage', title: 'Настройки сайта', icon: 'dashboard', auth: 'auth', admin: true }
+        // { name: 'Blog.MainPage', title: 'Блог', icon: 'book', auth: 'both', admin: false },
+        // { name: 'AdminSiteSettingsPage', title: 'Настройки сайта', icon: 'dashboard', auth: 'auth', admin: true }
+    ],
+
+    servicesRoutes: [
+        { name: 'Service.Timetable', title: 'Поиск пар <br> преподавателя', icon: 'dashboard', auth: 'both', admin: false },
+        { name: 'Service.RatingPhyEdu', title: 'Проверка рейтинга <br> по физ-ре', icon: 'rate_review', auth: 'both', admin: false }
     ],
 
     authRoutes: [

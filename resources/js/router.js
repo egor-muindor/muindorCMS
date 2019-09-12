@@ -5,6 +5,8 @@ import RegisterPage from './components/RegisterPage';
 import LoginPage from './components/LoginPage';
 import AboutPage from './components/AboutPage';
 import SiteSettingsPage from './components/SiteSettingsPage';
+import TimetablePage from './components/services/TimetablePage';
+import RatingPhyEduPage from './components/services/RatingPhyEduPage';
 
 import BlogMainPage from './components/blog/MainPage';
 import BlogPostPage from './components/blog/PostPage';
@@ -16,7 +18,9 @@ const customRoutes = [
     { path: '/login', name: 'LoginPage', component: LoginPage, meta: { title: 'Авторизация' } },
     { path: '/about', name: 'AboutPage', component: AboutPage, meta: { title: 'Обо мне' } },
     { path: '/admin/site-settings', name: 'AdminSiteSettingsPage', component: SiteSettingsPage, meta: { title: 'Редактирование настроек сайта' } },
-    { path: '/profile', name: 'ProfilePage', component: ProfilePage, meta: { title: 'Профиль' } }
+    { path: '/profile', name: 'ProfilePage', component: ProfilePage, meta: { title: 'Профиль' } },
+    { path: '/timetable', name: 'Service.Timetable', component: TimetablePage, meta: { title: 'Расписание преподавателей' } },
+    { path: '/rating-fp', name: 'Service.RatingPhyEdu', component: RatingPhyEduPage, meta: { title: 'Рейтинг по физической культуре' } }
 ];
 
 const blogRoutes = [

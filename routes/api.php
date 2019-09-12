@@ -25,3 +25,7 @@ Route::post('/logout', 'AuthController@logout');
 Route::post('/user/verify', 'AuthController@verify');
 Route::post('/user/profile', 'AuthController@updateProfile');
 
+
+Route::post('/timeboard/search', 'Timeboard\MainController@searchTeacher');
+Route::post('/timeboard/', 'Timeboard\MainController@getPairsByTeacherId');
+

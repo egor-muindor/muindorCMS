@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-navigation-drawer v-model="show" app>
-            <v-list>
+            <v-list dense nav>
 
                 <v-list-group v-if="auth.status === 'guest'" no-action class="hidden-md-and-up">
                     <template v-slot:activator>
@@ -83,6 +83,36 @@
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+
+                <v-list-group no-action>
+                    <template v-slot:activator>
+                        <v-list-item-icon>
+                            <v-icon>{{ icons.mdiPuzzle }}</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>Сервисы</v-list-item-title>
+                    </template>
+                    <v-list-group sub-group no-action>
+                        <template v-slot:activator>
+                            <v-list-item-title>Московский политех</v-list-item-title>
+                        </template>
+                        <v-list-item
+                            v-for="(item) in servicesRoutes"
+                            v-if="(item.auth === auth.status || item.auth === 'both') &&
+                        (!(auth.admin ^ item.admin) || auth.admin)"
+                            :key="item.name"
+                            :to="(item.name !== undefined) ? { name: item.name } : item.path"
+                            link
+                        >
+                            <v-list-item-title v-html="item.title" />
+                            <v-list-item-icon>
+                                <v-icon v-if="item.icon">
+                                    {{ item.icon }}
+                                </v-icon>
+                            </v-list-item-icon>
+                        </v-list-item>
+                    </v-list-group>
+                </v-list-group>
+
             </v-list>
         </v-navigation-drawer>
 
@@ -176,7 +206,7 @@
 <script>
 import { VListItemIcon } from 'vuetify/lib';
 import { mapState } from 'vuex';
-import { mdiGithubBox, mdiVkBox, mdiEmail, mdiLaravel, mdiVuejs, mdiVuetify, mdiTelegram } from '@mdi/js';
+import { mdiGithubBox, mdiVkBox, mdiEmail, mdiLaravel, mdiVuejs, mdiVuetify, mdiTelegram, mdiPuzzle } from '@mdi/js';
 import Auth from '../helpers/Auth';
 import axios from 'axios';
 
@@ -190,7 +220,8 @@ export default {
                 mdiLaravel: mdiLaravel,
                 mdiVuejs: mdiVuejs,
                 mdiVuetify: mdiVuetify,
-                mdiTelegram: mdiTelegram
+                mdiTelegram: mdiTelegram,
+                mdiPuzzle: mdiPuzzle,
             },
             active: null,
             show: false
@@ -200,7 +231,7 @@ export default {
         VListItemIcon
     },
     computed: {
-        ...mapState(['nav', 'authRoutes', 'profileNav']),
+        ...mapState(['nav', 'authRoutes', 'profileNav', 'servicesRoutes']),
         auth () {
             return this.$store.state.Auth;
         },
