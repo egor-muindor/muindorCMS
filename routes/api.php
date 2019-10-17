@@ -29,3 +29,4 @@ Route::post('/user/profile', 'AuthController@updateProfile');
 Route::post('/timeboard/search', 'Timeboard\MainController@searchTeacher');
 Route::post('/timeboard/', 'Timeboard\MainController@getPairsByTeacherId');
 
+Route::get('/ofp', 'Ofp\MainController@search');
