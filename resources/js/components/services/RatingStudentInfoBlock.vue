@@ -21,6 +21,10 @@
                 <span>Предыдущая сессия:</span> {{ data.students[0].mark }}
                 <br>
                 <span>Количество занятий:</span> {{ data.students[0].number_cls }}
+                <br>
+                <span>Сумма баллов<span style="color: red">*</span>:</span> {{ computedScore }}
+                <p style="font-size: 12px; line-height: 12px"><span style="color: red">*</span>Сумма баллов
+                    рассчитывается по формуле: количество занятий * 2 + сумма баллов за нормативы</p>
             </div>
         </div>
         <v-tabs
@@ -117,6 +121,13 @@ export default {
                     ...item
                 };
             });
+        },
+        computedScore () {
+            const standards = this.data.students[0].standards;
+            let stdTmpScore = 0;
+            // eslint-disable-next-line no-return-assign
+            if (standards.length !== 0) standards.forEach(item => stdTmpScore += parseInt(item.score));
+            return this.data.students[0].pairs.length * 2 + stdTmpScore;
         }
     },
     mounted () {

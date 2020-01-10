@@ -69,8 +69,8 @@ export default {
     },
     data () {
         return {
-            name: 'Фадеев Ег',
-            group: '171-37',
+            name: null,
+            group: null,
             results: null,
             state: {
                 find: false,
