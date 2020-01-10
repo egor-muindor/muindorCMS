@@ -13,6 +13,7 @@
                             Поиск пар преподавателя
                         </v-card-title>
                         <v-card-text>
+                            <p style="color:red; font-weight: bold">На время сессии отключен!</p>
                             <v-autocomplete
                                 v-model="selected"
                                 :items="items"
@@ -25,6 +26,7 @@
                                 label="ФИО преподавателя"
                                 placeholder="Начните вводить ФИО преподавателя"
                                 clearable
+                                disabled
                             />
                         </v-card-text>
                         <v-card-actions>

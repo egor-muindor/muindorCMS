@@ -19,11 +19,13 @@ class Info extends Model
     /*
      * PrimaryKey таблицы
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'name';
 
     /*
      * Отключение обновления полей updated_at и created_at
      */
     public $timestamps = false;
+
+    protected $hidden = ['name'];
 
 }
