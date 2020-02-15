@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="box">
+        <v-card class="box">
             <h2>{{ data.students[0].name }}</h2>
 
             <p style="color: gray">
@@ -26,60 +26,62 @@
                 <p style="font-size: 12px; line-height: 12px"><span style="color: red">*</span>Сумма баллов
                     рассчитывается по формуле: количество занятий * 2 + сумма баллов за нормативы</p>
             </div>
-        </div>
-        <v-tabs
-            v-model="tab"
-            grow
-        >
-            <v-tab href="#tab-pairs">
-                Посещения
-            </v-tab>
-            <v-tab href="#tab-norm">
-                Нормативы
-            </v-tab>
-        </v-tabs>
+        </v-card>
+        <v-card style="margin-top: 10px">
+            <v-tabs
+                v-model="tab"
+                grow
+            >
+                <v-tab href="#tab-pairs">
+                    Посещения
+                </v-tab>
+                <v-tab href="#tab-norm">
+                    Нормативы
+                </v-tab>
+            </v-tabs>
 
-        <v-tabs-items v-model="tab">
-            <v-tab-item
-                value="tab-pairs"
-            >
-                <v-card flat>
-                    <v-card-text>
-                        <v-data-table
-                            :headers="[{text: '№', value: 'num'}, {text:'Название дисциплины', value: 'name'}, {text: 'Дата посещения', value: 'date'}]"
-                            :items="computedPairs"
-                            dense
-                            disable-filtering
-                            disable-sort
-                            items-per-page="15"
-                            fixed-header
-                            calculate-widths
-                        />
-                    </v-card-text>
-                </v-card>
-            </v-tab-item>
-            <v-tab-item
-                value="tab-norm"
-            >
-                <v-card flat>
-                    <v-card-text>
+            <v-tabs-items v-model="tab">
+                <v-tab-item
+                    value="tab-pairs"
+                >
+                    <v-card flat>
                         <v-card-text>
                             <v-data-table
-                                :headers="standards_headers"
-                                :items="computedStandards"
+                                :headers="[{text: '№', value: 'num'}, {text:'Название дисциплины', value: 'name'}, {text: 'Дата посещения', value: 'date'}]"
+                                :items="computedPairs"
                                 dense
                                 disable-filtering
                                 disable-sort
+                                items-per-page="15"
                                 fixed-header
                                 calculate-widths
-                                disable-pagination
-                                hide-default-footer
                             />
                         </v-card-text>
-                    </v-card-text>
-                </v-card>
-            </v-tab-item>
-        </v-tabs-items>
+                    </v-card>
+                </v-tab-item>
+                <v-tab-item
+                    value="tab-norm"
+                >
+                    <v-card flat>
+                        <v-card-text>
+                            <v-card-text>
+                                <v-data-table
+                                    :headers="standards_headers"
+                                    :items="computedStandards"
+                                    dense
+                                    disable-filtering
+                                    disable-sort
+                                    fixed-header
+                                    calculate-widths
+                                    disable-pagination
+                                    hide-default-footer
+                                />
+                            </v-card-text>
+                        </v-card-text>
+                    </v-card>
+                </v-tab-item>
+            </v-tabs-items>
+        </v-card>
     </div>
 </template>
 

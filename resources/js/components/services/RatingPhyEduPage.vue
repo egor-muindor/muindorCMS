@@ -12,17 +12,20 @@
                         <v-card-title><h2>НЕ Московский Политех</h2></v-card-title>
                         <v-card-title><h4>Рейтинг по физической культуре</h4></v-card-title>
                         <v-card-text>
+                            <p style="color:red; font-weight: bold">
+                                Отключено до появления таблицы нового семестра.
+                            </p>
                             <v-layout align-center justify-space-around class="d-flex flex-wrap">
                                 <v-flex sm7 xs12>
-                                    <v-text-field v-model="name" label="ФИО" />
+                                    <v-text-field disabled v-model="name" label="ФИО" />
                                 </v-flex>
                                 <v-flex sm4 xs12>
-                                    <v-text-field v-model="group" label="Учебная группа" />
+                                    <v-text-field disabled v-model="group" label="Учебная группа" />
                                 </v-flex>
                             </v-layout>
                         </v-card-text>
                         <v-card-actions class="justify-end">
-                            <v-btn color="primary" @click="onClickFind">
+                            <v-btn disabled color="primary" @click="onClickFind">
                                 Найти
                             </v-btn>
                         </v-card-actions>
@@ -36,10 +39,10 @@
                 row
             >
                 <v-flex md6 sm8 py-2>
+                    <div v-if="state.find">
+                        <RatingStudentInfoBlock :data="results" />
+                    </div>
                     <v-card id="results">
-                        <div v-if="state.find">
-                            <RatingStudentInfoBlock :data="results" />
-                        </div>
                         <div class="results__not-found" v-if="state.error">
                             <h1>Не найдено</h1>
                         </div>
