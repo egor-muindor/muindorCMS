@@ -12,20 +12,20 @@
                         <v-card-title><h2>НЕ Московский Политех</h2></v-card-title>
                         <v-card-title><h4>Рейтинг по физической культуре</h4></v-card-title>
                         <v-card-text>
-                            <p style="color:red; font-weight: bold">
-                                Отключено до появления таблицы нового семестра.
+                            <p style="color: darkgray; font-weight: bold">
+                                Таблица за второй семестр 2019/2020 учебного года.
                             </p>
                             <v-layout align-center justify-space-around class="d-flex flex-wrap">
                                 <v-flex sm7 xs12>
-                                    <v-text-field disabled v-model="name" label="ФИО" />
+                                    <v-text-field v-model="name" label="ФИО" />
                                 </v-flex>
                                 <v-flex sm4 xs12>
-                                    <v-text-field disabled v-model="group" label="Учебная группа" />
+                                    <v-text-field v-model="group" label="Учебная группа" />
                                 </v-flex>
                             </v-layout>
                         </v-card-text>
                         <v-card-actions class="justify-end">
-                            <v-btn disabled color="primary" @click="onClickFind">
+                            <v-btn color="primary" @click="onClickFind">
                                 Найти
                             </v-btn>
                         </v-card-actions>
