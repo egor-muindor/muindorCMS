@@ -11,4 +11,6 @@
 |
 */
 
+Route::get('/mc-backup', 'MinecraftController@main')->name('mc-backup.view');
+Route::post('/mc-backup/login', 'MinecraftController@login')->name('mc-backup.login');
 Route::view('/{any}', 'welcome')->where('any', '.*');
